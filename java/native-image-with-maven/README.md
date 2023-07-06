@@ -3,8 +3,6 @@
 ---
 
 1. Docker
-2. Java 17
-3. Maven
 
 ## Using:
 
@@ -13,13 +11,13 @@
 1. Build image:
 
 ``` bash
-mvn spring-boot:build-image
+docker build --no-cache -t own.com/native-image
 ```
 
 2. Run docker:
 
 ``` bash
-docker run --rm -p 8080:8080 docker.io/library/spring-native-simple-project:1.0-SNAPSHOT
+docker run --rm -p 8080:8080 own.com/native-image
 ```
 
 3. Show resource usage statistics:
