@@ -1,0 +1,7 @@
+#base
+.idea/*
+
+#developer-vm
+developer-vm/.vagrant/*
+developer-vm/disk/*
+developer-vm/*.log

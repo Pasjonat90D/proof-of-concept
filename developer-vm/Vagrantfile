@@ -1,20 +1,23 @@
+require "yaml"
+settings = YAML.load_file "settings.yaml"
 
 Vagrant.configure("2") do |config|
 
   #basic
-  config.vm.box = "ubuntu/xenial64"
-  config.vm.hostname = "developer-vm"
+  config.vm.box = settings["vm"]["box"]
+  config.vm.hostname = settings["vm"]["hostname"]
 
   #network
-  config.vm.network "private_network", ip: "10.10.10.10"
+  config.vm.network "private_network", ip: settings["vm"]["network"]["ip"]
 
   #ssh private key issue
+  #default true
   config.ssh.insert_key = false
 
  config.vm.provider "virtualbox" do |vb|
-   vb.name = "developer-vm"
-   vb.cpus = 4
-   vb.memory = "5000"
+   vb.name = settings["vm"]["name"]
+   vb.cpus = settings["vm"]["requirements"]["core"]
+   vb.memory = settings["vm"]["requirements"]["memory"]
 
 #   config.vm.provision "shell", path: "script/install_docker.sh"
 #   config.vm.provision "shell", path: "script/kubernetes.sh"

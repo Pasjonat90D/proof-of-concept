@@ -1,0 +1,10 @@
+vm:
+  name: developer-vm
+  box: bento/ubuntu-22.04
+  hostname: developer-vm
+  network:
+    ip: 192.168.56.4
+  requirements:
+    core: 2
+    #MB
+    memory: 2000
