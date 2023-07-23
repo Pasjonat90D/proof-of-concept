@@ -3,26 +3,39 @@ settings = YAML.load_file "settings.yaml"
 
 Vagrant.configure("2") do |config|
 
-  #basic
-  config.vm.box = settings["vm"]["box"]
-  config.vm.hostname = settings["vm"]["hostname"]
-
-  #network
-  config.vm.network "private_network", ip: settings["vm"]["network"]["ip"]
-
   #ssh private key issue
   #default true
-  config.ssh.insert_key = false
+  #necessary ?
+#  config.ssh.insert_key = false
 
- config.vm.provider "virtualbox" do |vb|
-   vb.name = settings["vm"]["name"]
-   vb.cpus = settings["vm"]["requirements"]["core"]
-   vb.memory = settings["vm"]["requirements"]["memory"]
+ config.vm.define "master" do |master|
+    master.vm.box = settings["vm"]["box"]
+    master.vm.hostname = settings["vm"]["hostname"]
+    #network
+    master.vm.network "private_network", ip: settings["vm"]["network"]["ip"]
 
-#   config.vm.provision "shell", path: "script/install_docker.sh"
-#   config.vm.provision "shell", path: "script/kubernetes.sh"
-
+   if settings["docker"]["install"] == true
+    master.vm.provision "shell",
+      env: {
+        "VERSION" => settings["docker"]["version"],
+      },
+      path: "scripts/docker.sh"
    end
+
+#   if settings["kubernetes"]["install"] == true
+#    master.vm.provision "shell",
+#      env: {
+#        "VERSION" => settings["kubernetes"]["version"],
+#      },
+#      path: "scripts/kubernetes.sh"
+#   end
+
+  master.vm.provider "virtualbox" do |vb|
+    vb.name = settings["vm"]["name"]
+    vb.cpus = settings["vm"]["requirements"]["core"]
+    vb.memory = settings["vm"]["requirements"]["memory"]
+  end
+ end
 
 
 end
