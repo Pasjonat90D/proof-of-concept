@@ -6,11 +6,13 @@ vm:
     ip: 192.168.56.4
   requirements:
     core: 2
-    #MB
-    memory: 5000
+    memory: 5000 #MB
 docker:
   install: false
-#  set specific version or empty (default version)
-#  version: 5:24.0.0-1~ubuntu.22.04~jammy
+#  version: 5:24.0.0-1~ubuntu.22.04~jammy #set specific version or default
 kubernetes:
   install: true
+  version: 1.27.3-00 #https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/README.md
+  cri-o:
+    version: 1.27
+    os: xUbuntu_22.04 #https://github.com/cri-o/cri-o/blob/main/install.md#apt-based-operating-systems-1
