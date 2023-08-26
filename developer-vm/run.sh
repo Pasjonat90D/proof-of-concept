@@ -27,10 +27,6 @@ case "$choice" in
         vboxmanage setproperty machinefolder "$oldDefaultMachineFolder"
 
         echo 'Process completed'
-
-
-#        vagrant ssh
-#        sudo apt-get update
         ;;
   n|N )
         echo "No"

@@ -39,4 +39,10 @@ sudo -u vagrant -H sh -c "sudo chown vagrant:vagrant /home/vagrant/.kube/config"
 
 sudo -u vagrant -H sh -c "kubectl taint nodes --all node-role.kubernetes.io/control-plane-"
 
+#shell autocompletion
+sudo apt-get install bash-completion
+kubectl completion bash | sudo tee /etc/bash_completion.d/kubectl > /dev/null
+sudo chmod a+r /etc/bash_completion.d/kubectl
+sudo -u vagrant -H sh -c "echo 'source <(kubectl completion bash)' >>~/.bashrc"
+
 echo "Successfully installed kubernetes"

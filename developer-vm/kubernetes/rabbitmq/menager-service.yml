@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: rabbitmq-manger
+  labels:
+    role: infrastructure
+    type: message-broker
+    app: rabbitmq
+spec:
+  type: NodePort
+  selector:
+    role: infrastructure
+    type: message-broker
+    app: rabbitmq
+  ports:
+    - name: manager
+      protocol: TCP
+      port: 15672
+      targetPort: 15672
+      nodePort: ${MANAGER_PORT}

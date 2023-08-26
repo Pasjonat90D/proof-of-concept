@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rabbitmq
+  labels:
+    role: infrastructure
+    type: message-broker
+    app: rabbitmq
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      role: infrastructure
+      type: message-broker
+      app: rabbitmq
+  template:
+    metadata:
+      labels:
+        role: infrastructure
+        type: message-broker
+        app: rabbitmq
+    spec:
+      containers:
+        - name: rabbitmq
+          image: ${IMAGE}
+          ports:
+            - name: broker
+              containerPort: 5672
+            - name: manager
+              containerPort: 15672
