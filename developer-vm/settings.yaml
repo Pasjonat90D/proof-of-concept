@@ -22,6 +22,6 @@ kubernetes:
       image: rabbitmq:3.7-management
       access: #access from host
         broker:
-          port: 9000
+          port: 30000
         manager:
-          port: 9001
+          port: 30001

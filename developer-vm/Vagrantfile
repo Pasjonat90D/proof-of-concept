@@ -31,7 +31,7 @@ Vagrant.configure("2") do |config|
    end
 
    if settings["kubernetes"]["extensions"]["rabbitmq"]["install"] == true
-    master.vm.provision "shell",
+    master.vm.provision "shell", privileged: false,
       env: {
         "IMAGE" => settings["kubernetes"]["extensions"]["rabbitmq"]["image"],
         "BROKER_PORT" => settings["kubernetes"]["extensions"]["rabbitmq"]["access"]["broker"]["port"],
