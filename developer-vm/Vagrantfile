@@ -40,12 +40,22 @@ Vagrant.configure("2") do |config|
       path: "scripts/kubernetes/extensions/rabbitmq.sh"
    end
 
+   if settings["kubernetes"]["extensions"]["log"]["install"] == true
+    master.vm.provision "shell", privileged: false,
+      env: {
+        "FLUENTD_IMAGE" => settings["kubernetes"]["extensions"]["log"]["fluentd"]["image"],
+        "KIBANA_IMAGE" => settings["kubernetes"]["extensions"]["log"]["kibana"]["image"],
+        "KIBANA_PORT" => settings["kubernetes"]["extensions"]["log"]["kibana"]["access"]["port"],
+        "ELASTICSEARCH_IMAGE" => settings["kubernetes"]["extensions"]["log"]["elasticsearch"]["image"]
+      },
+      path: "scripts/kubernetes/extensions/log.sh"
+   end
+
   master.vm.provider "virtualbox" do |vb|
     vb.name = settings["vm"]["name"]
     vb.cpus = settings["vm"]["requirements"]["core"]
     vb.memory = settings["vm"]["requirements"]["memory"]
   end
  end
-
 
 end

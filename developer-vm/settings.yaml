@@ -18,10 +18,21 @@ kubernetes:
     os: xUbuntu_22.04 #https://github.com/cri-o/cri-o/blob/main/install.md#apt-based-operating-systems-1
   extensions:
     rabbitmq:
-      install: true
+      install: false
       image: rabbitmq:3.7-management
       access: #access from host
         broker:
           port: 30000
         manager:
           port: 30001
+    log: #elasticsearch + fluentd + kibana
+      install: true
+      fluentd:
+        image: gcr.io/google-containers/fluentd-elasticsearch:v2.0.1
+      kibana:
+        image: docker.elastic.co/kibana/kibana:7.2.0
+        access:
+          port: 30002
+      elasticsearch:
+        image: elasticsearch:7.2.0
+

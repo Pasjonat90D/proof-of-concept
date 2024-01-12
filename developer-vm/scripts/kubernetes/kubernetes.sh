@@ -22,6 +22,10 @@ EOF
 sudo systemctl daemon-reload
 sudo systemctl enable crio --now
 
+#issue with dns https://github.com/kubernetes/kubernetes/issues/21613
+sudo modprobe br_netfilter
+sudo echo "br_netfilter" > /etc/modules-load.d/br_netfilter.conf
+
 sudo apt-get -qq update
 sudo apt-get install -y apt-transport-https ca-certificates curl
 sudo curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-archive-keyring.gpg
@@ -32,7 +36,7 @@ sudo echo "KUBELET_EXTRA_ARGS=--node-ip=$IP" > /etc/default/kubelet
 sudo systemctl restart kubelet
 sudo kubeadm init --ignore-preflight-errors=all --apiserver-advertise-address=$IP --apiserver-cert-extra-sans=$IP --cri-socket=unix:///var/run/crio/crio.sock
 
-#exit #doesnt work
+#kubectl config
 sudo -u vagrant -H sh -c "mkdir -p /home/vagrant/.kube"
 sudo -u vagrant -H sh -c "sudo cp -i /etc/kubernetes/admin.conf /home/vagrant/.kube/config"
 sudo -u vagrant -H sh -c "sudo chown vagrant:vagrant /home/vagrant/.kube/config"

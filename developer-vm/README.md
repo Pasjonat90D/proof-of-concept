@@ -6,6 +6,7 @@
 |------------------|-------|
 | RabbitMQ-broker  | 30000 |
 | RabbitMQ-manager | 30001 |
+| Kibana-Gui       | 30002 |
 
 ### Access
 Access from host (settings.yaml): vm.network.ip:port\
